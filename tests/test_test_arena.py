@@ -4,6 +4,7 @@ import string
 from fixtures.chrome import chrome_browser
 from fixtures.testarena.login import browser
 from pages.home_page import HomePage
+from pages.login_page import LoginPage
 from pages.messages_page import MessagesPage
 
 administrator_email = 'administrator@testarena.pl'
@@ -24,6 +25,18 @@ def test_add_message(browser):
     messages_page = MessagesPage(browser)
     messages_page.add_message(my_text)
     messages_page.verify_message_added(my_text)
+
+def test_add_new_project(browser):
+    project_prefix = generate_random_string(5)
+    project_name = "Bartek" + project_prefix
+    project_description = "This is Bartek's project"
+
+    home_page = HomePage(browser)
+    admin_page = home_page.click_admin_icon()
+    add_project_page = admin_page.click_add_project()
+    edit_project_page = add_project_page.create_new_project(project_name, project_prefix, project_description)
+    projects_page = edit_project_page.click_projects_icon()
+    assert projects_page.search_project(project_name)
 
 
 def generate_random_string(length=10):
