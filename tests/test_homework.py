@@ -1,6 +1,5 @@
 import random
 import string
-
 from fixtures.chrome import chrome_browser
 from fixtures.testarena.login import browser
 from pages.home_page import HomePage
